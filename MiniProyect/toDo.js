@@ -11,6 +11,9 @@ let tareas = {}
 
 //Cuando se lee todo el HTML pinte las tareas.
 document.addEventListener("DOMContentLoaded", () =>{
+    if(localStorage.getItem("tareas")){
+        tareas = JSON.parse(localStorage.getItem("tareas"));
+    }
     pintarTareas();
 });
 
@@ -48,6 +51,8 @@ const setTarea = e => {
 }
 
 const pintarTareas = () => {
+
+    localStorage.setItem("tareas", JSON.stringify(tareas));
 
     if(Object.values(tareas).length === 0){
         listaTareas.innerHTML = `

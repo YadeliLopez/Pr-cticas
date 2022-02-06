@@ -7,18 +7,7 @@ const template = document.getElementById("template");
 const fragment = document.createDocumentFragment();
 
 //Colección de objetos
-let tareas = {
-    1644117741613: {
-        id: 1644117741613,
-        texto: "Tarea #1",
-        estado: false
-    },
-    1644117781148: {
-        id: 1644117781148,
-        texto: "Tarea#2",
-        estado: false
-    }
-}
+let tareas = {}
 
 //Cuando se lee todo el HTML pinte las tareas.
 document.addEventListener("DOMContentLoaded", () =>{
@@ -59,6 +48,16 @@ const setTarea = e => {
 }
 
 const pintarTareas = () => {
+
+    if(Object.values(tareas).length === 0){
+        listaTareas.innerHTML = `
+        <div class="alert alert-dark text-center">
+        Sin tareas pendientes 😃
+        </div>
+        `
+        return;
+    }
+
     listaTareas.innerHTML = ""; //Al momento de agregar otra tarea no se añadirán las anteriores
     Object.values(tareas).forEach(tarea => {
         //console.log(tarea);
@@ -69,6 +68,7 @@ const pintarTareas = () => {
         if(tarea.estado){
             clone.querySelector("alert").classList.replace("alert-warning", "alert-primary");
             clone.querySelector(".fas")[0].classList.replace("fa-check-circle", "fa-undo-alt");
+            clone.querySelector("p").style.textDecoration = "line-through"
         }
 
         clone.querySelectorAll(".fas")[0].dataset.id = tarea.id;
@@ -90,6 +90,13 @@ const btnAccion = e => {
 
     if(e.target.classList.contains("fa-minus-circle")){
         delete tareas[e.target.dataset.id];
+        pintarTareas();
+    }
+
+    if(e.target.classList.contains("fa-undo-alt")){
+        tareas[e.target.dataset.id].estado = false;
+        pintarTareas();
+        //console.log(tareas);
     }
 
     e.stopPropagation();

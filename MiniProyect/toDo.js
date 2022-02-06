@@ -3,7 +3,7 @@ console.log("Hola")
 const formulario = document.getElementById("formulario");
 const input = document.getElementById("input");
 const listaTareas = document.getElementById("listaTareas");
-const template = document.getElementById("template");
+const template = document.getElementById("template").content;
 const fragment = document.createDocumentFragment();
 
 //Colección de objetos
@@ -45,7 +45,7 @@ const setTarea = e => {
     }
     tareas[tareas.id] = tarea;
     //console.log(tareas);
-    formulario.requestFullscreen();
+    formulario.reset();
     input.focus();
     pintarTareas();
 }
@@ -68,7 +68,7 @@ const pintarTareas = () => {
         //console.log(tarea);
         //cuando tenemos un template hay que hacer clon primero
         const clone = template.cloneNode(true);
-        clone.querySelector("p").textContent = tareas.texto;
+        clone.querySelector("p").textContent = tarea.texto;
 
         if(tarea.estado){
             clone.querySelector("alert").classList.replace("alert-warning", "alert-primary");

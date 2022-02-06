@@ -10,20 +10,20 @@ const fragment = document.createDocumentFragment();
 let tareas = {}
 
 //Cuando se lee todo el HTML pinte las tareas.
-document.addEventListener("DOMContentLoaded", () =>{
-    if(localStorage.getItem("tareas")){
+document.addEventListener("load", "DOMContentLoaded", () => {
+    if(localStorage.getItem("tareas")) {
         tareas = JSON.parse(localStorage.getItem("tareas"));
     }
     pintarTareas();
 });
 
-listaTareas.addEventListener("click", e => {
+listaTareas.addEventListener("load", "click", e => {
     btnAccion(e);
 });
 
 //console.log(Date.now());
 
-formulario.addEventListener('submit', e => {
+formulario.addEventListener("load", 'submit', e => {
     e.preventDefault();
    // console.log(input.value);
 
@@ -68,7 +68,7 @@ const pintarTareas = () => {
         //console.log(tarea);
         //cuando tenemos un template hay que hacer clon primero
         const clone = template.cloneNode(true);
-        clone.querySelector("p").textContent = tarea.texto;
+        clone.querySelector("p").textContent = tareas.texto;
 
         if(tarea.estado){
             clone.querySelector("alert").classList.replace("alert-warning", "alert-primary");
@@ -76,8 +76,8 @@ const pintarTareas = () => {
             clone.querySelector("p").style.textDecoration = "line-through"
         }
 
-        clone.querySelectorAll(".fas")[0].dataset.id = tarea.id;
-        clone.querySelectorAll(".fas")[1].dataset.id = tarea.id;
+        clone.querySelectorAll(".fas")[0].dataset.id = tareas.id;
+        clone.querySelectorAll(".fas")[1].dataset.id = tareas.id;
         fragment.appendChild(clone);
     })
 

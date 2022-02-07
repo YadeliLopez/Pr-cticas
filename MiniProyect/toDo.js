@@ -7,28 +7,29 @@ const template = document.getElementById("template").content;
 const fragment = document.createDocumentFragment();
 
 //Colección de objetos
-let tareas = {}
+let tareas = {};
+let tareasFallidas = {};
+let tareasCompletadas = {};
 
 //Cuando se lee todo el HTML pinte las tareas.
-document.addEventListener("load", "DOMContentLoaded", () => {
+document.addEventListener("load", () => {
     if(localStorage.getItem("tareas")) {
         tareas = JSON.parse(localStorage.getItem("tareas"));
     }
     pintarTareas();
 });
 
-listaTareas.addEventListener("load", "click", e => {
+listaTareas.addEventListener("click", e => {
     btnAccion(e);
 });
 
 //console.log(Date.now());
 
-formulario.addEventListener("load", 'submit', e => {
+formulario.addEventListener('submit', e => {
     e.preventDefault();
    // console.log(input.value);
 
     setTarea(e)
-
 });
 
 //Evaluar si el input contiene algo o no.
@@ -43,7 +44,7 @@ const setTarea = e => {
         texto: input.value,
         estado: false
     }
-    tareas[tareas.id] = tarea;
+    tareas[tarea.id] = tarea;
     //console.log(tareas);
     formulario.reset();
     input.focus();
@@ -51,7 +52,6 @@ const setTarea = e => {
 }
 
 const pintarTareas = () => {
-
     localStorage.setItem("tareas", JSON.stringify(tareas));
 
     if(Object.values(tareas).length === 0){
@@ -71,13 +71,13 @@ const pintarTareas = () => {
         clone.querySelector("p").textContent = tarea.texto;
 
         if(tarea.estado){
-            clone.querySelector("alert").classList.replace("alert-warning", "alert-primary");
-            clone.querySelector(".fas")[0].classList.replace("fa-check-circle", "fa-undo-alt");
+            clone.querySelector(".alert").classList.replace("alert-warning", "alert-primary");
+            clone.querySelectorAll(".fas")[0].classList.replace("fa-check-circle", "fa-undo-alt");
             clone.querySelector("p").style.textDecoration = "line-through"
         }
 
-        clone.querySelectorAll(".fas")[0].dataset.id = tareas.id;
-        clone.querySelectorAll(".fas")[1].dataset.id = tareas.id;
+        clone.querySelectorAll(".fas")[0].dataset.id = tarea.id;
+        clone.querySelectorAll(".fas")[1].dataset.id = tarea.id;
         fragment.appendChild(clone);
     })
 
@@ -87,10 +87,9 @@ const pintarTareas = () => {
 const btnAccion = e => {
     //console.log(e.target.classList.contains("fa-check-circle"));
     if(e.target.classList.contains("fa-check-circle")){
-        console.log(e.target.dataset.id);
+        console.log(e.target.dataset);
         tareas[e.target.dataset.id].estado = true;
         pintarTareas();
-        //console.log(tareas);
     }
 
     if(e.target.classList.contains("fa-minus-circle")){

@@ -8,8 +8,8 @@ const fragment = document.createDocumentFragment();
 
 //Colección de objetos
 let tareas = {};
-let tareasFallidas = {};
-let tareasCompletadas = {};
+//let tareasFallidas = {};
+//let tareasCompletadas = {};
 
 //Cuando se lee todo el HTML pinte las tareas.
 document.addEventListener("load", () => {

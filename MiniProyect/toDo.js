@@ -1,4 +1,4 @@
-console.log("Hola")
+//console.log("Hola")
 
 const formulario = document.getElementById("formulario");
 const input = document.getElementById("input");
